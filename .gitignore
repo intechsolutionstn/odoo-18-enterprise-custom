@@ -1,0 +1,43 @@
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Logs
+*.log
+logs/
+
+# Database backups
+*.sql
+backups/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Odoo specific
+filestore/
+sessions/
+addons/__pycache__/
+*.pyc
+*.pyo
+
+# Project specific
+odoo18-*/
+!odoo18-*/addons/
+!odoo18-*/manage.sh
+!odoo18-*/docker-compose.yml

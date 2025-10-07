@@ -1,0 +1,35 @@
+# Odoo 18 Enterprise Custom Image with Subscription Fix
+# This Dockerfile creates a custom Odoo 18 Enterprise image with the subscription warning removed
+
+FROM registry.polyline.xyz/odooenterprise:18.0
+
+# Set maintainer
+LABEL maintainer="Your Name <your.email@example.com>"
+LABEL description="Odoo 18 Enterprise with subscription warning removed for test environments"
+LABEL version="1.0"
+
+# Install additional tools if needed
+USER root
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /opt/odoo/custom-scripts \
+    && chown -R odoo:odoo /opt/odoo
+
+# Switch back to odoo user
+USER odoo
+
+# Copy the subscription fix script
+COPY --chown=odoo:odoo fix_subscription.sql /opt/odoo/custom-scripts/
+
+# Copy the initialization script
+COPY --chown=odoo:odoo init_odoo.sh /opt/odoo/custom-scripts/
+
+# Make scripts executable
+RUN chmod +x /opt/odoo/custom-scripts/*.sh
+
+# Expose the port
+EXPOSE 8069
+
+# Set the default command
+CMD ["/opt/odoo/custom-scripts/init_odoo.sh"]
