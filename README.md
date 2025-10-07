@@ -215,7 +215,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🙏 Acknowledgments
 
-- Based on the excellent work by [minhng92/odoo-17-docker-compose](https://github.com/minhng92/odoo-17-docker-compose)
 - Odoo Community for the amazing ERP system
 - Docker team for containerization technology
 
