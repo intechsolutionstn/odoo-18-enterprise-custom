@@ -7,7 +7,7 @@ Set up Odoo 18 Enterprise with subscription warning removed quickly for developm
 Install Docker and Docker Compose, then run the following to set up Odoo 18 Enterprise:
 
 ```bash
-curl -s https://raw.githubusercontent.com/YOUR_USERNAME/odoo-18-enterprise-custom/master/run.sh | bash -s odoo18-project 10036 5432
+curl -s https://raw.githubusercontent.com/intechsolutionstn/odoo-18-enterprise-custom/main/run.sh | bash -s odoo18-project 10036 5432
 ```
 
 ### Parameters:
@@ -19,14 +19,14 @@ curl -s https://raw.githubusercontent.com/YOUR_USERNAME/odoo-18-enterprise-custo
 
 ```bash
 # Default installation (port 10036)
-curl -s https://raw.githubusercontent.com/YOUR_USERNAME/odoo-18-enterprise-custom/master/run.sh | bash
+curl -s https://raw.githubusercontent.com/intechsolutionstn/odoo-18-enterprise-custom/main/run.sh | bash
 
 # Custom ports
-curl -s https://raw.githubusercontent.com/YOUR_USERNAME/odoo-18-enterprise-custom/master/run.sh | bash -s my-odoo 8080 5433
+curl -s https://raw.githubusercontent.com/intechsolutionstn/odoo-18-enterprise-custom/main/run.sh | bash -s my-odoo 8080 5433
 
 # Multiple instances
-curl -s https://raw.githubusercontent.com/YOUR_USERNAME/odoo-18-enterprise-custom/master/run.sh | bash -s odoo-dev 10036 5432
-curl -s https://raw.githubusercontent.com/YOUR_USERNAME/odoo-18-enterprise-custom/master/run.sh | bash -s odoo-test 11036 5433
+curl -s https://raw.githubusercontent.com/intechsolutionstn/odoo-18-enterprise-custom/main/run.sh | bash -s odoo-dev 10036 5432
+curl -s https://raw.githubusercontent.com/intechsolutionstn/odoo-18-enterprise-custom/main/run.sh | bash -s odoo-test 11036 5433
 ```
 
 ## ✨ Features
@@ -142,7 +142,7 @@ The following environment variables are available:
 If you get a "port already allocated" error, use a different port:
 
 ```bash
-curl -s https://raw.githubusercontent.com/YOUR_USERNAME/odoo-18-enterprise-custom/master/run.sh | bash -s my-odoo 8080 5433
+curl -s https://raw.githubusercontent.com/intechsolutionstn/odoo-18-enterprise-custom/main/run.sh | bash -s my-odoo 8080 5433
 ```
 
 ### Permission Issues
@@ -213,11 +213,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgments
-
-- Based on the excellent work by [minhng92/odoo-17-docker-compose](https://github.com/minhng92/odoo-17-docker-compose)
-- Odoo Community for the amazing ERP system
-- Docker team for containerization technology
 
 ## 📞 Support
 
