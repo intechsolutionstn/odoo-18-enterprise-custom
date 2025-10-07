@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Odoo 18 Enterprise Custom Image - One-Command Installation
-# This script sets up Odoo 18 Enterprise with subscription warning removed
-# Usage: curl -s https://raw.githubusercontent.com/YOUR_USERNAME/odoo-18-enterprise-custom/master/run.sh | bash -s PROJECT_NAME ODOO_PORT POSTGRES_PORT
+# Odoo 18 Community Custom Image - One-Command Installation
+# This script sets up Odoo 18 Community with subscription warning removed for educational purposes
+# Usage: curl -s https://raw.githubusercontent.com/intechsolutionstn/odoo-18-enterprise-custom/main/run.sh | bash -s PROJECT_NAME ODOO_PORT POSTGRES_PORT
 
 set -e
 
@@ -43,7 +43,7 @@ PROJECT_NAME=${1:-"odoo18-enterprise"}
 ODOO_PORT=${2:-"10036"}
 POSTGRES_PORT=${3:-"5432"}
 
-print_header "Odoo 18 Enterprise Custom Installation"
+print_header "Odoo 18 Community Educational Installation"
 echo "Project: $PROJECT_NAME"
 echo "Odoo Port: $ODOO_PORT"
 echo "PostgreSQL Port: $POSTGRES_PORT"
@@ -92,7 +92,7 @@ services:
       retries: 5
 
   odoo:
-    image: odoo18-enterprise-custom:latest
+    image: odoo:18.0
     depends_on:
       db:
         condition: service_healthy
@@ -111,6 +111,21 @@ services:
     volumes:
       - odoo-data:/var/lib/odoo
       - ./addons:/mnt/extra-addons
+      - ./fix_subscription.sql:/opt/odoo/fix_subscription.sql
+    command: >
+      bash -c "
+        echo 'Waiting for database to be ready...' &&
+        until pg_isready -h db -p 5432 -U odoo; do
+          echo 'PostgreSQL is unavailable - sleeping'
+          sleep 1
+        done &&
+        echo 'PostgreSQL is up - starting Odoo' &&
+        /entrypoint.sh odoo --init=base --stop-after-init --no-http &&
+        echo 'Applying subscription fix...' &&
+        psql -h db -p 5432 -U odoo -d postgres -f /opt/odoo/fix_subscription.sql &&
+        echo 'Starting Odoo server...' &&
+        /entrypoint.sh odoo
+      "
 
 volumes:
   pgdata:
@@ -197,40 +212,9 @@ EOF
 
 chmod +x manage.sh
 
-# Check if custom image exists
-print_status "Checking for custom Odoo 18 Enterprise image..."
-if ! docker images | grep -q "odoo18-enterprise-custom"; then
-    print_warning "Custom image not found. Building it now..."
-    
-    # Create Dockerfile
-    cat > Dockerfile << 'EOF'
-FROM registry.polyline.xyz/odooenterprise:18.0
-
-LABEL maintainer="Odoo 18 Enterprise Custom"
-LABEL description="Odoo 18 Enterprise with subscription warning removed for test environments"
-LABEL version="1.0"
-
-USER root
-RUN apt-get update && apt-get install -y \
-    postgresql-client \
-    && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /opt/odoo/custom-scripts \
-    && chown -R odoo:odoo /opt/odoo
-
-USER odoo
-
-COPY --chown=odoo:odoo fix_subscription.sql /opt/odoo/custom-scripts/
-COPY --chown=odoo:odoo init_odoo.sh /opt/odoo/custom-scripts/
-
-RUN chmod +x /opt/odoo/custom-scripts/*.sh
-
-EXPOSE 8069
-
-CMD ["/opt/odoo/custom-scripts/init_odoo.sh"]
-EOF
-
-    # Create subscription fix SQL
-    cat > fix_subscription.sql << 'EOF'
+# Create subscription fix SQL
+print_status "Creating subscription fix script..."
+cat > fix_subscription.sql << 'EOF'
 INSERT INTO ir_config_parameter (key, value, create_date, write_date)
 VALUES ('database.expiration_date', '2030-12-31 23:59:59', NOW(), NOW())
 ON CONFLICT (key) 
@@ -239,58 +223,8 @@ DO UPDATE SET
     write_date = NOW();
 EOF
 
-    # Create initialization script
-    cat > init_odoo.sh << 'EOF'
-#!/bin/bash
-set -e
-
-echo "=========================================="
-echo "Odoo 18 Enterprise Custom Image Starting"
-echo "=========================================="
-
-# Wait for database to be ready
-echo "[INFO] Waiting for database to be ready..."
-until pg_isready -h "$HOST" -p "$PORT" -U "$USER" > /dev/null 2>&1; do
-    echo "[INFO] Waiting for database..."
-    sleep 2
-done
-
-echo "[INFO] Database is ready!"
-
-# Start Odoo in the background
-echo "[INFO] Starting Odoo..."
-exec /entrypoint.sh odoo &
-
-# Wait a moment for Odoo to start
-sleep 10
-
-# Apply subscription fix
-echo "[INFO] Applying subscription fix..."
-if psql -h "$HOST" -p "$PORT" -U "$USER" -d "$DB_NAME" -f /opt/odoo/custom-scripts/fix_subscription.sql > /dev/null 2>&1; then
-    echo "[SUCCESS] Subscription warning has been removed!"
-else
-    echo "[WARNING] Could not apply subscription fix. Odoo will continue running."
-fi
-
-echo "[INFO] Odoo 18 Enterprise is ready!"
-echo "[INFO] Access at: http://localhost:8069"
-echo "=========================================="
-
-wait
-EOF
-
-    chmod +x init_odoo.sh
-
-    # Build the image
-    print_status "Building custom Odoo 18 Enterprise image..."
-    docker build -t odoo18-enterprise-custom:latest .
-    
-    # Clean up build files
-    rm -f Dockerfile fix_subscription.sql init_odoo.sh
-fi
-
 # Start services
-print_status "Starting Odoo 18 Enterprise services..."
+print_status "Starting Odoo 18 Community services..."
 docker compose up -d
 
 # Wait for services to be ready
@@ -301,7 +235,7 @@ sleep 15
 if docker compose ps | grep -q "Up"; then
     print_header "Installation completed successfully!"
     echo ""
-    echo "🎉 Odoo 18 Enterprise is now running!"
+    echo "🎉 Odoo 18 Community is now running!"
     echo ""
     echo "📋 Access Information:"
     echo "   • Odoo URL: http://localhost:$ODOO_PORT"
@@ -317,13 +251,15 @@ if docker compose ps | grep -q "Up"; then
     echo ""
     echo "✨ Features:"
     echo "   • Subscription warning automatically removed"
-    echo "   • Ready for development and testing"
+    echo "   • Ready for educational and learning purposes"
     echo "   • Custom addons support in ./addons/ directory"
+    echo "   • No external registry dependencies"
     echo ""
     echo "📁 Project Structure:"
     echo "   • docker-compose.yml - Docker configuration"
     echo "   • manage.sh - Management script"
     echo "   • addons/ - Custom addons directory"
+    echo "   • fix_subscription.sql - Subscription fix script"
     echo ""
 else
     print_error "Failed to start services. Please check the logs:"

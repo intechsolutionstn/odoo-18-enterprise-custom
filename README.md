@@ -1,12 +1,12 @@
-# Odoo 18 Enterprise Custom - One-Command Installation
+# Odoo 18 Community Educational - One-Command Installation
 
 ⚠️ **EDUCATIONAL USE ONLY** - This project is intended for educational and learning purposes only. Please respect Odoo's licensing terms and use only for legitimate educational activities.
 
-Set up Odoo 18 Enterprise with subscription warning removed quickly for development/production using Docker Compose.
+Set up Odoo 18 Community with subscription warning removed quickly for educational purposes using Docker Compose. No external registry dependencies required.
 
 ## 🚀 Quick Installation
 
-Install Docker and Docker Compose, then run the following to set up Odoo 18 Enterprise:
+Install Docker and Docker Compose, then run the following to set up Odoo 18 Community:
 
 ```bash
 curl -s https://raw.githubusercontent.com/intechsolutionstn/odoo-18-enterprise-custom/main/run.sh | bash -s odoo18-project 10036 5432
@@ -45,7 +45,7 @@ curl -s https://raw.githubusercontent.com/intechsolutionstn/odoo-18-enterprise-c
 
 - Docker and Docker Compose installed
 - Internet connection for image download
-- Access to private registry: `registry.polyline.xyz`
+- No external registry access required
 
 ## 🛠️ Usage
 
@@ -114,7 +114,7 @@ The following environment variables are available:
 
 ## 🐳 Docker Images
 
-- **Odoo**: Custom image based on `registry.polyline.xyz/odooenterprise:18.0`
+- **Odoo**: Public image `odoo:18.0` (Community Edition)
 - **PostgreSQL**: `postgres:16`
 
 ## 🔒 Security

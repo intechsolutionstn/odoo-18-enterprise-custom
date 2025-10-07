@@ -1,11 +1,11 @@
-# Odoo 18 Enterprise Custom Image with Subscription Fix
-# This Dockerfile creates a custom Odoo 18 Enterprise image with the subscription warning removed
+# Odoo 18 Community Custom Image with Subscription Fix
+# This Dockerfile creates a custom Odoo 18 Community image with the subscription warning removed
 
-FROM registry.polyline.xyz/odooenterprise:18.0
+FROM odoo:18.0
 
 # Set maintainer
 LABEL maintainer="Your Name <your.email@example.com>"
-LABEL description="Odoo 18 Enterprise with subscription warning removed for test environments"
+LABEL description="Odoo 18 Community with subscription warning removed for educational environments"
 LABEL version="1.0"
 
 # Install additional tools if needed
