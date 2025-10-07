@@ -1,5 +1,7 @@
 # Odoo 18 Enterprise Custom - One-Command Installation
 
+⚠️ **EDUCATIONAL USE ONLY** - This project is intended for educational and learning purposes only. Please respect Odoo's licensing terms and use only for legitimate educational activities.
+
 Set up Odoo 18 Enterprise with subscription warning removed quickly for development/production using Docker Compose.
 
 ## 🚀 Quick Installation
@@ -37,6 +39,7 @@ curl -s https://raw.githubusercontent.com/intechsolutionstn/odoo-18-enterprise-c
 - **🔄 Easy Management**: Simple commands for all operations
 - **🐳 Docker Based**: Consistent environment across all systems
 - **⚡ Fast Setup**: One command installation
+- **🎓 Educational Focus**: Designed for learning and educational purposes
 
 ## 📋 Prerequisites
 
@@ -120,6 +123,18 @@ The following environment variables are available:
 - Subscription warning removed for test environments
 - All data persisted in Docker volumes
 
+## ⚠️ Educational Use Disclaimer
+
+**IMPORTANT**: This project is designed for **educational and learning purposes only**. 
+
+- 🎓 **Educational Use**: Intended for students, developers, and educators learning Odoo
+- 📚 **Learning Focus**: Helps understand Odoo 18 Enterprise features and capabilities
+- ⚖️ **Legal Compliance**: Users must respect Odoo's licensing terms and conditions
+- 🚫 **Not for Production**: This setup is not intended for commercial or production use
+- 📖 **Study Purpose**: Use only for legitimate educational activities and research
+
+**Please ensure you have proper licensing for any commercial use of Odoo Enterprise.**
+
 ## 📊 Management Commands
 
 | Command | Description |
@@ -195,15 +210,17 @@ To update to the latest image:
 - **Database logs**: `./manage.sh logs-db`
 - **All logs**: `docker compose logs`
 
-## 🎯 Production Deployment
+## 🎯 Educational Deployment
 
-For production deployment:
+For educational and learning environments:
 
-1. **Change default passwords**
-2. **Configure SSL/TLS**
-3. **Set up proper backup strategy**
+1. **Change default passwords** for security
+2. **Use in isolated environments** (not connected to production systems)
+3. **Set up proper backup strategy** for learning data
 4. **Use environment files for secrets**
-5. **Configure monitoring and alerting**
+5. **Configure monitoring** for learning purposes
+
+**Note**: This setup is designed for educational use only. For production deployments, please use official Odoo Enterprise with proper licensing.
 
 ## 🤝 Contributing
 
@@ -212,6 +229,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+**Educational Use License**: This project is provided for educational purposes only. Users must comply with Odoo's Enterprise licensing terms for any commercial use.
 
 
 ## 📞 Support
